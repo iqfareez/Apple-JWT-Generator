@@ -1,11 +1,9 @@
-## Notice
-Apple now provides a tool for turning your Team ID, MapKit key, and MapKit Key ID into a JWT. https://maps.developer.apple.com/token-maker
 
 # Apple JWT Generator
 
-In order to use MapKit JS or MusicKit JS you need to generate a JWT to authenticate your requests. Unfortuneatly this isn't straight forward and Apple's documentation isn't super helpful with showing you how to generate a JWT.
+In order to use Sign In with Apple (or other Apple API services) you need to generate a JWT to authenticate your requests. Unfortunately this isn't straight forward and Apple's documentation isn't super helpful with showing you how to generate a JWT.
 
-> MapKit JS requires authorization via JSON Web Tokens (JWT) for initialization and some API calls. You obtain a key used to create the token when you complete the setup in your Apple Developer account.
+> Sign In with Apple authorization via JSON Web Tokens (JWT) for initialization and some API calls. You obtain a key used to create the token when you complete the setup in your Apple Developer account.
 
 This simple Python program should help you generate a JWT you can use for development.
 
@@ -36,29 +34,26 @@ You probably just want an easy way to generate your JWT so you can move on with 
 
 ### Setup Python Environment
 1. Clone this repository - `$ git clone git@github.com:addisonwebb/Apple-JWT-Generator.git`
-2. Verify you have Python installed - `$ python --version` *Output will likely be `Python 2.7.10`*
-3. Install pip - `$ sudo easy_install pip`
-4. Install virtualenv - `$ sudo -H pip install virtualenv`
-5. Change to the root directory of the project
-6. Setup a virtual environment - `$ virtualenv env`
-7. Begin using virtual environment - `$ source env/bin/activate`
-8. Install [pyjwt](https://github.com/jpadilla/pyjwt/) - `$ pip install pyjwt`
-9. Install [cryptography](https://github.com/pyca/cryptography) - `$ pip install cryptography`
+1. Verify you have Python installed - `$ python --version` *Output will likely be `3.10.13`*
+1. Setup a virtual environment - `$ python -m venv venv`
+1. Begin using virtual environment - `$ source venv/bin/activate`
+1. Install requirements - `$ pip install -r requirements.txt`
 
 ### Using the program
-1. Update `main.py` with the values for your Team ID, Key ID, and private key. Save the file.
-2. Back in terminal run the program - `$ python main.py`
+1. Copy `.env.example` to `.env` - `$ cp .env.example .env`
+1. Update the contents of `.env` with the values for your Team ID, Key ID, and private key. Save the file. (Refer guides above)
+2. Back in terminal run the program - `$ dotenv python main.py`
 
 You should see output that looks like the following:
 ```
 fyFhbEciOiJFUzI1NiIsInR5cC16IkpXVCIsImtpZCI6IkNTTFo2QjdNOFoifQ.eyJpc3MiOiJGSjRVQk02Uko3IiwiaWF0IjoxNTMwMDcwMtkyLjMyNQA4OSwiZXhwIjoxNTMwMDcxOTkyLjMyNDA4OX0.uveH2BifavlkJp8KLUPCHC0Eh9C6igaUdA6jIawW0r1wsOo44mNSq53e_bH8ZoB2JcNSqXqYvKVYEREi6S02gq
 ```
 
-🎉 This is the JWT you use to authenticate requests via the MapKit JS and MusicKit JS. 
+🎉 This is the JWT you use to authenticate requests with Sign In With Apple, MapKit JS, MusicKit JS, etc. 
 
 
 ## Sources:
-- [Getting and Using a MapKit JS Key (video)](https://developer.apple.com/videos/play/wwdc2018/508)
+- [Creating a client secret](https://developer.apple.com/documentation/accountorganizationaldatasharing/creating-a-client-secret)
 - [Getting Keys and Creating Tokens](https://developer.apple.com/documentation/applemusicapi/getting_keys_and_creating_tokens)
 - [jwt.io](https://jwt.io)
 - [pyjwt](https://github.com/jpadilla/pyjwt/)

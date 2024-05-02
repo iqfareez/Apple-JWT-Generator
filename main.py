@@ -1,18 +1,20 @@
 import jwt
 import time
+import os
 
 # Team ID
-team_id = 'DK07BE4QJA'
+team_id = os.environ['TEAM_ID']
 
 # Key ID
-key_id = 'ASL1737N84'
+key_id = os.environ['KEY_ID']
 
 # Private Key
-private_key = b'-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgaHJzKVQTtzGdPpw/\nYQ2LE3QxLYimXsYJaiCieBhhqwygCgYIKoZIzj0DAQehRANCAASiGbpU+CNTH/UF\niqnW9IMBBhhYJL61McJVjYWIX1JTa5NYL0MdMAy/WgF6Vw3QWx6x/4cJB3mfsXKs\n40t0mfGT\n-----END PRIVATE KEY-----'
+# private_key = bytes(os.environ['PRIVATE_KEY'].replace('\\n', '\n').encode('utf-8'))
+private_key=b'-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgFWp6A9RgVg+CHCar\nP9QD4JRNARm3HfzVxwN4lcPGxX2gCgYIKoZIzj0DAQehRANCAAQZEMpdS5SyjmOA\nkK4dLJSMwuAetrZeVwrQOUgrFJEv1GQNDQPdDkWxrVAUYXF2ZSqgOo67PGlGnh1P\nlzJO2EV1\n-----END PRIVATE KEY-----'
 
 issued_timestamp = time.time()
 expiration_timestamp = issued_timestamp + 1800
 
-encoded = jwt.encode({'iss': team_id,'iat': issued_timestamp,'exp': expiration_timestamp}, private_key, algorithm='ES256', headers={'kid': key_id})
+encoded = jwt.encode({'iss': team_id,'iat': issued_timestamp,'exp': expiration_timestamp, 'aud': "https://appleid.apple.com", 'sub' : os.environ['SUBJECT']}, private_key, algorithm='ES256', headers={'kid': key_id})
 
 print(encoded)
